@@ -1,66 +1,95 @@
-function App() {
+import React from "react";
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { Layout } from "./components/Layout";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+import { LandingPage } from "./pages/LandingPage";
+import { HumanizerTool } from "./pages/HumaizerTool";
+import { PricingPage } from "./pages/PricingPage";
+import { Dashboard } from "./pages/Dashboard";
+import { Login, Signup, ForgotPassword } from "./pages/Auth/AuthPage";
+// --- NEW IMPORT ---
+import { SignaturePage } from "./pages/SignaturePage";
+
+// Protected Route Wrapper
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  return <>{children}</>;
+};
+
+const AppRoutes: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#FEFCF9] flex items-center justify-center px-6">
-      <div className="w-full max-w-3xl space-y-8">
-        {/* Heading */}
-        <header className="space-y-2 text-center">
-          <h1 className="text-4xl font-semibold text-[#6366F1]">
-            Tailwind Test Page
-          </h1>
-          <p className="text-gray-600">
-            If this looks styled, Tailwind is working correctly.
-          </p>
-        </header>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <LandingPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/humanizer"
+        element={
+          <Layout>
+            <HumanizerTool />
+          </Layout>
+        }
+      />
+      <Route
+        path="/pricing"
+        element={
+          <Layout>
+            <PricingPage />
+          </Layout>
+        }
+      />
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Deep Purple</h3>
-            <p className="text-sm text-gray-600 mt-2">
-              Used for emphasis and interactions.
-            </p>
-            <div className="mt-4 h-2 w-full bg-[#6366F1]" />
-          </div>
+      {/* --- UPDATED ROUTE --- */}
+      <Route
+        path="/signature"
+        element={
+          <Layout>
+            <SignaturePage />
+          </Layout>
+        }
+      />
 
-          <div className="bg-white p-6 border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Warm Coral</h3>
-            <p className="text-sm text-gray-600 mt-2">
-              Used for highlights and CTAs.
-            </p>
-            <div className="mt-4 h-2 w-full bg-[#F97316]" />
-          </div>
+      {/* Auth Routes - No Layout for focus */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          <div className="bg-white p-6 border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Emerald Green</h3>
-            <p className="text-sm text-gray-600 mt-2">
-              Used for success states.
-            </p>
-            <div className="mt-4 h-2 w-full bg-[#10B981]" />
-          </div>
-        </div>
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Dashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
 
-        {/* Buttons */}
-        <div className="flex flex-wrap justify-center gap-4">
-          <button className="px-6 py-3 bg-[#6366F1] text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#6366F1]/40">
-            Primary Action
-          </button>
-
-          <button className="px-6 py-3 bg-[#F97316] text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#F97316]/40">
-            Highlight Action
-          </button>
-
-          <button className="px-6 py-3 bg-[#10B981] text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-[#10B981]/40">
-            Success Action
-          </button>
-        </div>
-
-        {/* Footer */}
-        <footer className="text-center text-sm text-gray-500 pt-4">
-          Tailwind utilities • spacing • colors • hover • focus
-        </footer>
-      </div>
-    </div>
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <AppRoutes />
+      </Router>
+    </AuthProvider>
   );
 }
-
-export default App;

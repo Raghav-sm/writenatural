@@ -26,6 +26,46 @@ const NoiseTexture = () => (
     }}
   />
 );
+const ProcessingLoader = () => {
+  return (
+    /* -mt-12 pulls the loader slightly above the true center */
+    <div className="flex flex-col items-center justify-center gap-1.5 -mt-12">
+      <div className="flex items-baseline font-display font-bold text-2xl tracking-tight opacity-60">
+        <span className="text-black">Write</span>
+        <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
+          Natural
+        </span>
+
+        {/* items-baseline ensures dots sit on the floor of the text */}
+        <div className="flex items-baseline ml-0.5 text-stone-900">
+          <span
+            className="animate-pulse"
+            style={{ animationDuration: "1s", animationDelay: "0s" }}
+          >
+            .
+          </span>
+          <span
+            className="animate-pulse"
+            style={{ animationDuration: "1s", animationDelay: "0.2s" }}
+          >
+            .
+          </span>
+          <span
+            className="animate-pulse"
+            style={{ animationDuration: "1s", animationDelay: "0.4s" }}
+          >
+            .
+          </span>
+        </div>
+      </div>
+
+      {/* Re-humanizing text */}
+      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+        Re-humanizing text
+      </p>
+    </div>
+  );
+};
 
 export const HumanizerTool: React.FC = () => {
   const [input, setInput] = useState("");
@@ -243,10 +283,8 @@ export const HumanizerTool: React.FC = () => {
               {/* Output Content */}
               <div className="relative grow p-8 overflow-y-auto z-0">
                 {isProcessing && (
-                  <div className="absolute inset-0 z-20 bg-white/60 backdrop-blur-sm flex flex-col items-center justify-center rounded-b-3xl">
-                    <p className="font-display font-bold text-xl animate-pulse text-stone-400">
-                      Refining narrative...
-                    </p>
+                  <div className="absolute inset-0 z-20 bg-white/80 backdrop-blur-md flex items-center justify-center rounded-b-3xl">
+                    <ProcessingLoader />
                   </div>
                 )}
 

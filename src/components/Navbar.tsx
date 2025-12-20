@@ -142,8 +142,20 @@ export const Navbar: React.FC = () => {
                 Log In
               </Link>
               <Link to="/humanizer" onClick={() => setIsOpen(false)}>
-                <button className="w-full py-4 rounded-full bg-stone-900 text-white font-bold text-lg shadow-lg">
-                  Start Writing
+                <button className="w-full group relative rounded-xl p-0.5 overflow-hidden transition-transform active:scale-[0.98]">
+                  {/* Gradient Background */}
+                  <div className="absolute inset-0 bg-linear-to-r from-accent-purple via-accent-coral to-accent-purple animate-gradient-xy opacity-100" />
+
+                  {/* White Button Face */}
+                  <div className="relative w-full py-4 bg-white rounded-[10px] flex items-center justify-center gap-3 group-hover:bg-stone-50 transition-colors">
+                    <span className="font-display font-bold text-lg text-stone-900 tracking-wide">
+                      Start Writing
+                    </span>
+                    <ArrowRight
+                      size={18}
+                      className="text-accent-coral group-hover:translate-x-1 transition-transform"
+                    />
+                  </div>
                 </button>
               </Link>
             </div>
@@ -153,3 +165,5 @@ export const Navbar: React.FC = () => {
     </>
   );
 };
+
+

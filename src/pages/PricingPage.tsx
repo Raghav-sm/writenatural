@@ -9,35 +9,49 @@ export const PricingPage: React.FC = () => {
       name: "Guest",
       price: 0,
       desc: "For the curious.",
-      feat: ["500 words/mo", "Standard Speed", "Basic Modes"],
+      feat: [
+        "10 conversions per day",
+        "100 words per conversion",
+        "Standard Speed",
+        "Basic Modes",
+      ],
       buttonText: "Try Free",
     },
     {
       name: "Creator",
-      price: 49,
+      price: 4.99,
       desc: "For the prolific.",
       recommended: true,
       feat: [
-        "50k words/mo",
+        "100 conversions per day",
         "Instant Speed",
         "All Humanizer Modes",
-        "No Watermark",
+        "Priority Support",
       ],
       buttonText: "Subscribe",
     },
     {
       name: "Pro",
-      price: 199,
+      price: 14.99,
       desc: "For the scale.",
       feat: [
-        "Unlimited Words",
+        "Unlimited Conversions",
         "API Access",
-        "Team Seats (5)",
-        "White-labeling",
+        "Batch Processing",
+        "Custom Brand Voice",
       ],
-      buttonText: "Contact Sales",
+      buttonText: "Get Pro",
     },
   ];
+
+  // Logic to handle the specific price points mentioned in requirements
+  const getDisplayPrice = (usdPrice: number) => {
+    if (usdPrice === 0) return "0";
+    if (currency === "INR") {
+      return usdPrice === 4.99 ? "399" : "1199";
+    }
+    return usdPrice.toString();
+  };
 
   return (
     <div className="relative min-h-screen bg-cream overflow-hidden selection:bg-accent-coral selection:text-white pt-6 pb-24">
@@ -144,7 +158,6 @@ export const PricingPage: React.FC = () => {
               `}
             >
               <div className="relative h-full flex flex-col bg-[#FDFCF8] rounded-[22px] overflow-hidden">
-                {/* Subtle Texture Inside Card */}
                 <div className="absolute inset-0 opacity-[0.5] pointer-events-none bg-[#FDFCF8]" />
 
                 {/* --- Vertical Right-Side Watermark --- */}
@@ -154,7 +167,9 @@ export const PricingPage: React.FC = () => {
                     <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
                       Natural
                     </span>
-                    <span className="text-stone-900">{plan.name}</span>
+                    <span className="text-stone-900 uppercase">
+                      {plan.name}
+                    </span>
                   </span>
                 </div>
 
@@ -162,14 +177,12 @@ export const PricingPage: React.FC = () => {
                 <div className="p-8 grow relative z-10">
                   <div className="flex justify-between items-start mb-6">
                     <div>
-                      {/* Name with Gradient Dot (UPDATED SIZE) */}
                       <h3 className="font-display font-black text-5xl text-stone-900 tracking-tight">
                         {plan.name}
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
                           .
                         </span>
                       </h3>
-                      {/* Description (UPDATED FONT) */}
                       <p className="font-serif italic text-xl text-stone-500 mt-2">
                         {plan.desc}
                       </p>
@@ -198,7 +211,7 @@ export const PricingPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* MIDDLE: Dashed Divider */}
+                {/* MIDDLE: Dashed Divider with Circle Cutouts */}
                 <div className="relative w-full h-0.5 z-10 my-2">
                   <div className="absolute inset-0 border-t-2 border-dashed border-stone-200" />
                   <div className="absolute -left-3 -top-3 w-6 h-6 rounded-full border-r-2 border-stone-200 bg-cream" />
@@ -215,7 +228,7 @@ export const PricingPage: React.FC = () => {
                       <div className="flex items-baseline">
                         <span className="font-display font-bold text-4xl text-stone-900">
                           {currency === "USD" ? "$" : "₹"}
-                          {currency === "USD" ? plan.price : plan.price * 83}
+                          {getDisplayPrice(plan.price)}
                         </span>
                         {plan.price > 0 && (
                           <span className="text-stone-400 font-sans font-medium text-sm ml-1">

@@ -20,7 +20,7 @@ export const Navbar: React.FC = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Editor", path: "/humanizer" },
-    { name: "Signature", path: "/signature" }, // Replaces Science
+    { name: "Signature", path: "/signature" },
     { name: "Pricing", path: "/pricing" },
   ];
 
@@ -121,8 +121,20 @@ export const Navbar: React.FC = () => {
 
       {/* --- MOBILE MENU OVERLAY --- */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 bg-cream/95 backdrop-blur-xl flex flex-col pt-32 px-8 animate-in fade-in duration-200">
-          <div className="relative z-10 flex flex-col gap-8">
+        <div className="fixed inset-0 z-40 bg-cream/95 backdrop-blur-xl flex flex-col pt-32 px-8 animate-in fade-in duration-200 h-screen overflow-hidden">
+          {/* NEW: Vertical Text Decoration on Right Side */}
+          <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none select-none opacity-90 z-0">
+            <div className="font-display font-black text-[12vh] leading-none [writing-mode:vertical-rl] rotate-180 whitespace-nowrap">
+              <span className="text-stone-900">Write</span>
+              {/* Removed pb-4 and joined spans to prevent whitespace gaps */}
+              <span className="text-transparent bg-clip-text bg-linear-to-b from-blue-600 via-accent-purple to-accent-coral">
+                Natural
+              </span>
+              <span className="text-stone-900">.</span>
+            </div>
+          </div>
+
+          <div className="relative z-10 flex flex-col gap-8 pb-10 overflow-y-auto h-full pr-16">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
@@ -137,22 +149,25 @@ export const Navbar: React.FC = () => {
                 />
               </Link>
             ))}
-            <div className="mt-8 border-t border-stone-200 pt-8 flex flex-col gap-4">
+
+            <div className="mt-8 border-t border-stone-200 pt-8 flex flex-col gap-6">
               <Link to="/login" className="text-xl font-bold text-stone-500">
                 Log In
               </Link>
+
+              {/* UPDATED MOBILE CAPSULE BUTTON */}
               <Link to="/humanizer" onClick={() => setIsOpen(false)}>
-                <button className="w-full group relative rounded-xl p-0.5 overflow-hidden transition-transform active:scale-[0.98]">
+                <button className="w-full group relative rounded-full p-0.5 overflow-hidden transition-transform active:scale-[0.98] shadow-xl shadow-stone-900/10">
                   {/* Gradient Background */}
                   <div className="absolute inset-0 bg-linear-to-r from-accent-purple via-accent-coral to-accent-purple animate-gradient-xy opacity-100" />
 
-                  {/* White Button Face */}
-                  <div className="relative w-full py-4 bg-white rounded-[10px] flex items-center justify-center gap-3 group-hover:bg-stone-50 transition-colors">
-                    <span className="font-display font-bold text-lg text-stone-900 tracking-wide">
+                  {/* Inner Face - Matches Desktop Aesthetic */}
+                  <div className="relative w-full py-4 bg-cream rounded-full flex items-center justify-center gap-3 group-hover:bg-white transition-colors">
+                    <span className="text-lg font-bold bg-clip-text text-transparent bg-linear-to-r from-stone-900 to-stone-700 uppercase tracking-widest">
                       Start Writing
                     </span>
                     <ArrowRight
-                      size={18}
+                      size={20}
                       className="text-accent-coral group-hover:translate-x-1 transition-transform"
                     />
                   </div>
@@ -165,5 +180,3 @@ export const Navbar: React.FC = () => {
     </>
   );
 };
-
-

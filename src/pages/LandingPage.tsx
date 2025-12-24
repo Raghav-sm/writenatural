@@ -16,22 +16,22 @@ export const LandingPage: React.FC = () => {
       {/* --- HERO SECTION --- */}
       <section className="relative z-10 pt-32 pb-20 px-6 lg:px-12 max-w-350 mx-auto min-h-[85vh] flex flex-col justify-center overflow-visible">
         {/* FIX: BACKGROUND TEXT
-            - Reduced size on mobile (text-[5rem]) to prevent collision.
-            - Anchored to right (-right-4) to maintain the "Right Side" aesthetic.
-            - Restores to massive size (text-[12rem/18rem]) on Desktop.
+            - Changed top-28 to top-0 on mobile to lift it out of the way of the H1.
+            - Adjusted mobile font size to text-[4rem] to prevent horizontal crushing.
         */}
-        <div className="absolute top-28 -right-4 sm:-right-10 md:top-20 md:-right-[20vw] lg:-right-[10vw] opacity-[0.9] select-none pointer-events-none z-0 leading-[0.8] text-right">
-          <span className="block font-display font-black text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[18rem] text-black tracking-tighter whitespace-nowrap">
+        <div className="absolute top-0 -right-2 sm:-right-10 md:top-20 md:-right-[20vw] lg:-right-[10vw] opacity-[0.9] select-none pointer-events-none z-0 leading-[0.8] text-right">
+          <span className="block font-display mt-6 font-black text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[18rem] text-black tracking-tighter whitespace-nowrap">
             Write
           </span>
-          <span className="block font-display font-black text-[5rem] sm:text-[8rem] md:text-[12rem] lg:text-[18rem] text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral tracking-tighter ml-12 md:ml-40 whitespace-nowrap">
+          <span className="block font-display font-black text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[18rem] text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral tracking-tighter ml-8 md:ml-40 whitespace-nowrap">
             Natural
           </span>
         </div>
 
-        {/* --- LEFT PART: Highlighters --- */}
-        <div className="flex flex-col gap-8 max-w-4xl relative z-20">
-
+        {/* --- LEFT PART: Highlighters --- 
+            Added mt-16 on mobile to push the H1 down from the background text
+        */}
+        <div className="flex flex-col gap-8 max-w-4xl relative z-20 mt-16 md:mt-0">
           <h1 className="font-display font-bold text-6xl sm:text-7xl md:text-9xl tracking-tighter leading-[1.1] text-stone-900">
             {/* Row 1: AI Text (Purple Highlight) */}
             <span className="relative inline-block whitespace-nowrap mr-2 md:mr-4">

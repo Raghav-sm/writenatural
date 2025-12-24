@@ -3,7 +3,6 @@
 
 @theme {
   /* 1. The Palette */
-  /* UPDATED: Light Linen / Bone White */
   --color-cream: #F5F4EF;   
   --color-paper: #FFFFFF;   
   
@@ -20,27 +19,49 @@
   --shadow-sheet: 0 2px 40px -12px rgba(0,0,0,0.1);
 
   --image-noise: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
-
 }
 
 @layer base {
   body {
-    /* Uses the new lighter cream by default */
     @apply bg-cream text-stone-850 antialiased font-sans;
   }
 }
+
 @layer utilities {
   .bg-noise {
     background-image: var(--image-noise);
   }
+  
   .text-balance {
     text-wrap: balance;
   }
+
+  /* --- Dot Sequence Animation --- */
   @keyframes dot-sequence {
     0%, 20%, 100% { opacity: 0; transform: translateY(0); }
     50% { opacity: 1; transform: translateY(-1px); }
   }
   .animate-dot-sequence {
     animation: dot-sequence 1.5s infinite;
+  }
+
+  /* --- Vertical Scroll Animation (Moved from Component) --- */
+  @keyframes vertical-scroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+  
+  .animate-vertical-scroll {
+    animation: vertical-scroll 40s linear infinite;
+  }
+  
+  .animate-vertical-scroll:hover {
+    animation-play-state: paused;
+  }
+
+  /* --- Gradient Mask Utility --- */
+  .mask-gradient-top {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
   }
 }

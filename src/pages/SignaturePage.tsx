@@ -2,27 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, ArrowRight, MoveRight, Quote } from "lucide-react";
 
-// --- STYLES & ANIMATION ---
-const AnimationStyles = () => (
-  <style>{`
-    @keyframes vertical-scroll {
-      from { transform: translateY(0); }
-      to { transform: translateY(-50%); }
-    }
-    .animate-vertical-scroll {
-      animation: vertical-scroll 40s linear infinite;
-    }
-    .animate-vertical-scroll:hover {
-      animation-play-state: paused;
-    }
-    /* Fade out the top so testimonials vanish smoothly */
-    .mask-gradient-top {
-      mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 100%);
-    }
-  `}</style>
-);
-
 // --- VISUAL ASSETS ---
 
 const NoiseTexture = () => (
@@ -47,7 +26,6 @@ const GradientCapsule = ({ label }: { label: string }) => (
 );
 
 // --- COMPONENT: Clean Stream Entry ---
-// Minimalist, no box, just typography.
 const StreamEntry = ({ quote, author, role, accentColor }: any) => {
   const authorColor =
     accentColor === "purple" ? "text-accent-purple" : "text-accent-coral";
@@ -69,34 +47,33 @@ const StreamEntry = ({ quote, author, role, accentColor }: any) => {
   );
 };
 
-// --- TESTIMONIAL DATA (Cleaned) ---
 const testimonialData = [
   {
     quote:
       "The first time I used it, I felt relief. It captured the messy, unstructured way I actually think. It’s translating intent, not just generating text.",
-    author: "Dr. Evelyn Reed",
-    role: "Stanford Humanities Fellow",
+    author: "Dr. Ananya Gupta",
+    role: "Linguistics Lead, LaundaryWala",
     accent: "purple",
   },
   {
     quote:
       "Our pitch deck needed to sound visionary, not algorithmic. This injected the necessary chaotic energy that standard models completely filter out.",
-    author: "Marcus Cole",
-    role: "Stealth Startup",
+    author: "Aryan Sharma",
+    role: "Founder, Zylos (YC S24)",
     accent: "coral",
   },
   {
     quote:
       "I run a network of niche sites. We were getting crushed by updates. Switched to this workflow for calibration, and traffic stabilized completely.",
-    author: "Sarah J.",
-    role: "Portfolio Manager",
+    author: "Meera Reddy",
+    role: "Digital Portfolio Manager",
     accent: "purple",
   },
   {
     quote:
       "Finally, a tool that understands that 'neutral' is just another word for boring. The output feels like it has a pulse.",
-    author: "David Chen",
-    role: "TechDaily",
+    author: "Vikram Malhotra",
+    role: "TechDaily India",
     accent: "coral",
   },
 ];
@@ -151,12 +128,11 @@ const TheoryItem = ({ date, title }: any) => (
 export const SignaturePage: React.FC = () => {
   return (
     <div className="relative w-full min-h-screen bg-cream text-stone-900 font-sans selection:bg-accent-coral selection:text-white flex flex-col overflow-x-hidden">
-      <AnimationStyles />
       <NoiseTexture />
 
       {/* --- BACKGROUND BLOBS --- */}
-      <div className="fixed top-0 right-0 w-125 h-125bg-accent-purple opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
-      <div className="fixed bottom-0 left-0 w-125 h-125bg-accent-coral opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
+      <div className="fixed top-0 right-0 w-125 h-125 bg-accent-purple opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
+      <div className="fixed bottom-0 left-0 w-125 h-125 bg-accent-coral opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
 
       <main className="relative z-10 pt-32 pb-20 px-6 md:px-12 max-w-400 mx-auto w-full">
         {/* --- HERO: MANIFESTO + STREAM --- */}
@@ -179,9 +155,8 @@ export const SignaturePage: React.FC = () => {
 
             {/* RIGHT SIDE: The Stream "Vanishing" Above the Quote */}
             <div className="lg:col-span-7 relative z-10 pl-0 lg:pl-16">
-              {/* 1. The Streaming Testimonials (Visual "Proof" floating above) */}
+              {/* 1. The Streaming Testimonials */}
               <div className="relative h-75 overflow-hidden mask-gradient-top mb-6">
-                {/* The scrolling container */}
                 <div className="animate-vertical-scroll flex flex-col gap-8">
                   {[...testimonialData, ...testimonialData].map((t, i) => (
                     <StreamEntry
@@ -195,9 +170,8 @@ export const SignaturePage: React.FC = () => {
                 </div>
               </div>
 
-              {/* 2. The Anchor Quote (Static, grounded) */}
+              {/* 2. The Anchor Quote */}
               <div className="relative">
-                {/* Top Quote Icon */}
                 <div className="absolute -top-6 -left-8 text-stone-300 opacity-40">
                   <Quote size={50} className="fill-stone-300/30" />
                 </div>

@@ -12,8 +12,10 @@ import { HumanizerTool } from "./pages/HumaizerTool";
 import { PricingPage } from "./pages/PricingPage";
 import { Dashboard } from "./pages/Dashboard";
 import { Login, Signup, ForgotPassword } from "./pages/Auth/AuthPage";
-// --- NEW IMPORT ---
 import { SignaturePage } from "./pages/SignaturePage";
+
+// --- NEW IMPORT ---
+import { NotFoundPage } from "./pages/NotFoundPage";
 
 // Protected Route Wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -54,7 +56,6 @@ const AppRoutes: React.FC = () => {
         }
       />
 
-      {/* --- UPDATED ROUTE --- */}
       <Route
         path="/signature"
         element={
@@ -80,6 +81,8 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

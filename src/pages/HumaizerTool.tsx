@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Settings2,
   ChevronDown,
@@ -36,38 +36,132 @@ const NoiseTexture = () => (
   />
 );
 
+// --- UPDATED: Queue Loader Component ---
 const ProcessingLoader = () => {
+  const [queuePosition, setQueuePosition] = useState(16);
+  const [timeLeft, setTimeLeft] = useState(60); // Total wait time in seconds
+  const totalTime = 60; // Reference for progress calculation
+
+  useEffect(() => {
+    // Simulate the queue
+    const interval = setInterval(() => {
+      setQueuePosition((prev) => (prev > 1 ? prev - 1 : 1));
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 100); // Fast countdown for demo purposes
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // SVG Configuration
+  const radius = 80;
+  const circumference = 2 * Math.PI * radius;
+  // Calculate how much to fill based on time passed
+  const timePassed = totalTime - timeLeft;
+  const progressPercent = (timePassed / totalTime) * 100;
+  const strokeDashoffset =
+    circumference - (progressPercent / 100) * circumference;
+
   return (
-    <div className="flex flex-col items-center justify-center gap-1.5 -mt-12">
-      <div className="flex items-baseline font-display font-bold text-2xl tracking-tight opacity-60">
-        <span className="text-black">Write</span>
-        <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
-          Natural
-        </span>
-        <div className="flex items-baseline ml-0.5 text-stone-900">
-          <span
-            className="animate-pulse"
-            style={{ animationDuration: "1s", animationDelay: "0s" }}
-          >
-            .
+    <div className="flex flex-col items-center justify-center -mt-8">
+      {/* --- SVG PROGRESS RING --- */}
+      <div className="relative w-56 h-56 mb-8 flex items-center justify-center">
+        {/* SVG Circle */}
+        <svg
+          className="w-full h-full -rotate-90 transform"
+          viewBox="0 0 200 200"
+        >
+          <defs>
+            <linearGradient
+              id="gradientStroke"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              {/* Using generic hex codes that match Purple/Coral aesthetic */}
+              <stop offset="0%" stopColor="#9333ea" /> {/* Purple */}
+              <stop offset="100%" stopColor="#f43f5e" /> {/* Coral */}
+            </linearGradient>
+          </defs>
+
+          {/* Track (Gray Background Circle) */}
+          <circle
+            cx="100"
+            cy="100"
+            r={radius}
+            stroke="#f5f5f4" // stone-100
+            strokeWidth="6"
+            fill="transparent"
+          />
+
+          {/* Progress (Gradient Fill Circle) */}
+          <circle
+            cx="100"
+            cy="100"
+            r={radius}
+            stroke="url(#gradientStroke)"
+            strokeWidth="6"
+            fill="transparent"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            strokeLinecap="round"
+            className="transition-all duration-300 ease-linear"
+          />
+        </svg>
+
+        {/* Content Inside Circle */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4 text-center">
+          <span className="font-serif text-stone-500 italic text-sm mb-1">
+            You're
           </span>
-          <span
-            className="animate-pulse"
-            style={{ animationDuration: "1s", animationDelay: "0.2s" }}
-          >
-            .
+          <span className="font-display font-bold text-5xl text-stone-900 tracking-tighter leading-none mb-2">
+            {queuePosition}
           </span>
-          <span
-            className="animate-pulse"
-            style={{ animationDuration: "1s", animationDelay: "0.4s" }}
-          >
-            .
+          <span className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">
+            In Line
           </span>
+
+          {/* New Clean Time Format */}
+          <div className="flex items-center gap-2 text-stone-500">
+            <span className="text-sm font-mono font-medium tabular-nums">
+               {timeLeft} seconds
+            </span>
+          </div>
         </div>
       </div>
-      <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
-        Re-humanizing text
-      </p>
+
+      {/* --- Existing Branding Text --- */}
+      <div className="flex flex-col items-center gap-1.5">
+        <div className="flex items-baseline font-display font-bold text-2xl tracking-tight opacity-60">
+          <span className="text-black">Write</span>
+          <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
+            Natural
+          </span>
+          <div className="flex items-baseline ml-0.5 text-stone-900">
+            <span
+              className="animate-pulse"
+              style={{ animationDuration: "1s", animationDelay: "0s" }}
+            >
+              .
+            </span>
+            <span
+              className="animate-pulse"
+              style={{ animationDuration: "1s", animationDelay: "0.2s" }}
+            >
+              .
+            </span>
+            <span
+              className="animate-pulse"
+              style={{ animationDuration: "1s", animationDelay: "0.4s" }}
+            >
+              .
+            </span>
+          </div>
+        </div>
+        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+          Re-humanizing text
+        </p>
+      </div>
     </div>
   );
 };
@@ -79,7 +173,7 @@ const GradientHighlight = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-// --- NEW DESIGN: Manuscript / Ledger Style ---
+// --- Recent Activity Section ---
 const RecentActivitySection = ({
   history,
   onRestore,
@@ -128,7 +222,7 @@ const RecentActivitySection = ({
 
   return (
     <div className="w-full max-w-350 mx-auto mt-24 mb-24 relative z-10 px-4 md:px-0">
-      {/* Editorial Header (Vertical Line Removed) */}
+      {/* Editorial Header */}
       <div className="mb-16">
         <h2 className="font-display font-bold text-3xl md:text-4xl text-stone-900">
           {isDummy ? "Example " : "Recent "}
@@ -155,7 +249,7 @@ const RecentActivitySection = ({
               key={item.id}
               className="group relative grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 py-12 border-b border-stone-100 last:border-0"
             >
-              {/* Timeline Dot (Desktop) - Solid Black */}
+              {/* Timeline Dot (Desktop) */}
               <div className="hidden lg:block absolute left-1/2 top-14 -translate-x-1/2 z-10">
                 <div className="w-2 h-2 rounded-full bg-stone-900 ring-4 ring-cream" />
               </div>
@@ -242,6 +336,7 @@ export const HumanizerTool: React.FC = () => {
     if (!input || isOverLimit) return;
     setIsProcessing(true);
 
+    // Timeout to simulate processing and show the queue animation
     setTimeout(() => {
       setIsProcessing(false);
       // Dummy logic for demo output
@@ -257,7 +352,7 @@ export const HumanizerTool: React.FC = () => {
         output: dummyOutput,
       };
       setHistory((prev) => [newEntry, ...prev].slice(0, 5)); // Keep last 5 on screen
-    }, 2000);
+    }, 6000); // 6 Seconds for demo
   };
 
   const handleClear = () => {
@@ -447,7 +542,7 @@ export const HumanizerTool: React.FC = () => {
 
               <div className="relative grow p-8 overflow-y-auto z-0">
                 {isProcessing && (
-                  <div className="absolute inset-0 z-20 bg-white/80 backdrop-blur-md flex items-center justify-center rounded-b-3xl">
+                  <div className="absolute inset-0 z-20 bg-white/95 backdrop-blur-md flex items-center justify-center rounded-b-3xl">
                     <ProcessingLoader />
                   </div>
                 )}
@@ -477,7 +572,6 @@ export const HumanizerTool: React.FC = () => {
 
       <footer className="relative z-20 px-6 py-12">
         <div className="max-w-350 mx-auto flex justify-between items-center text-[10px] font-mono uppercase tracking-widest text-stone-400">
-
           <span className="font-display font-bold text-lg text-stone-400 hover:text-accent-purple cursor-pointer transition-colors">
             Report Issue
           </span>

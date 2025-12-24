@@ -1,6 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { MoveRight, ArrowDown, Asterisk, ArrowRight } from "lucide-react";
+import {
+  MoveRight,
+  ArrowDown,
+  Asterisk,
+  ArrowRight,
+  Fingerprint,
+} from "lucide-react";
 
 export const LandingPage: React.FC = () => {
   return (
@@ -15,10 +21,7 @@ export const LandingPage: React.FC = () => {
 
       {/* --- HERO SECTION --- */}
       <section className="relative z-10 pt-32 pb-20 px-6 lg:px-12 max-w-350 mx-auto min-h-[85vh] flex flex-col justify-center overflow-visible">
-        {/* FIX: BACKGROUND TEXT
-            - Changed top-28 to top-0 on mobile to lift it out of the way of the H1.
-            - Adjusted mobile font size to text-[4rem] to prevent horizontal crushing.
-        */}
+        {/* FIX: BACKGROUND TEXT */}
         <div className="absolute top-0 -right-2 sm:-right-10 md:top-20 md:-right-[20vw] lg:-right-[10vw] opacity-[0.9] select-none pointer-events-none z-0 leading-[0.8] text-right">
           <span className="block font-display mt-6 font-black text-[6rem] sm:text-[8rem] md:text-[12rem] lg:text-[18rem] text-black tracking-tighter whitespace-nowrap">
             Write
@@ -28,21 +31,19 @@ export const LandingPage: React.FC = () => {
           </span>
         </div>
 
-        {/* --- LEFT PART: Highlighters --- 
-            Added mt-16 on mobile to push the H1 down from the background text
-        */}
+        {/* --- LEFT PART: Highlighters --- */}
         <div className="flex flex-col gap-8 max-w-4xl relative z-20 mt-16 md:mt-0">
           <h1 className="font-display font-bold text-6xl sm:text-7xl md:text-9xl tracking-tighter leading-[1.1] text-stone-900">
             {/* Row 1: AI Text (Purple Highlight) */}
             <span className="relative inline-block whitespace-nowrap mr-2 md:mr-4">
-              <span className="absolute -inset-1 top-2 bottom-2 bg-accent-purple/30 -skew-x-6 -rotate-1 rounded-sm -z-10 block"></span>
+              <span className="absolute -inset-1 top-2 bottom-2 bg-accent-purple/50 -skew-x-6 -rotate-1 rounded-sm -z-10 block"></span>
               AI Text
             </span>
             <br />
 
             {/* Row 2: Humanizer (Coral Highlight) */}
             <span className="relative inline-block whitespace-nowrap">
-              <span className="absolute -inset-1 top-2 bottom-2 bg-accent-coral/30 skew-x-3 rotate-1 rounded-sm -z-10 block"></span>
+              <span className="absolute -inset-1 top-2 bottom-2 bg-accent-coral/50 skew-x-3 rotate-1 rounded-sm -z-10 block"></span>
               Humanizer.
             </span>
           </h1>
@@ -59,7 +60,7 @@ export const LandingPage: React.FC = () => {
                 We{" "}
                 <span className="relative inline-block px-1">
                   {/* The Organic Highlighter (Yellow) */}
-                  <span className="absolute inset-0 bg-yellow-200/80 -rotate-1 rounded-sm -z-10 mix-blend-multiply transform skew-x-[-10deg]"></span>
+                  <span className="absolute inset-0 bg-yellow-300/80 -rotate-1 rounded-sm -z-10 mix-blend-multiply transform skew-x-[-10deg]"></span>
                   re-humanize.
                 </span>
               </p>
@@ -121,10 +122,10 @@ export const LandingPage: React.FC = () => {
                       better."
                     </p>
                     <div className="mt-4 flex gap-2">
-                      <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 uppercase tracking-wide border border-green-200">
+                      <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 uppercase tracking-wide border border-stone-900">
                         Human Pass
                       </span>
-                      <span className="bg-stone-100 text-stone-600 text-xs font-bold px-2 py-1 uppercase tracking-wide border border-stone-200">
+                      <span className="bg-stone-100 text-stone-900 text-xs font-bold px-2 py-1 uppercase tracking-wide border border-stone-900">
                         Readability: A+
                       </span>
                     </div>
@@ -239,8 +240,13 @@ export const LandingPage: React.FC = () => {
         <div className="absolute bottom-0 right-0 w-125 h-125 bg-accent-coral opacity-[0.05] rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          {/* --- FINGERPRINT: Merged with text on the right --- */}
+          <div className="absolute right-0 top-0 md:-right-12 md:-top-4 w-62.5 h-62.5 md:w-100 md:h-100 opacity-[0.04] pointer-events-none rotate-12 mix-blend-multiply">
+            <Fingerprint size="100%" className="text-stone-900" />
+          </div>
+
           {/* Simplified Heading - Static Colors */}
-          <h2 className="font-display text-7xl md:text-9xl font-bold mb-12 tracking-tighter">
+          <h2 className="relative z-10 font-display text-7xl md:text-9xl font-bold mb-12 tracking-tighter">
             <span className="text-stone-900">Write</span>
             <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
               {" "}
@@ -249,13 +255,13 @@ export const LandingPage: React.FC = () => {
             <span className="text-stone-900">.</span>
           </h2>
 
-          <p className="text-xl md:text-2xl font-serif italic opacity-80 mb-12 max-w-2xl mx-auto text-stone-600">
+          <p className="relative z-10 text-xl md:text-2xl font-serif italic opacity-80 mb-12 max-w-2xl mx-auto text-stone-600">
             "The only way to sound like a person is to write like one."
           </p>
 
           <Link to="/humanizer">
             {/* Fixed Button Design */}
-            <button className="group relative rounded-full p-0.5 overflow-hidden transition-transform duration-300 hover:scale-105 shadow-2xl shadow-stone-900/20">
+            <button className="group relative z-10 rounded-full p-0.5 overflow-hidden transition-transform duration-300 hover:scale-105 shadow-2xl shadow-stone-900/20">
               {/* The Gradient Border Background */}
               <div className="absolute inset-0 bg-linear-to-r from-accent-purple via-accent-coral to-accent-purple animate-gradient-xy opacity-100" />
 

@@ -36,7 +36,7 @@ const NoiseTexture = () => (
   />
 );
 
-// --- UPDATED: Queue Loader Component ---
+// --- UPDATED: Queue Loader Component (Responsive Sizing) ---
 const ProcessingLoader = () => {
   const [queuePosition, setQueuePosition] = useState(16);
   const [timeLeft, setTimeLeft] = useState(60); // Total wait time in seconds
@@ -63,8 +63,9 @@ const ProcessingLoader = () => {
 
   return (
     <div className="flex flex-col items-center justify-center -mt-8">
-      {/* --- SVG PROGRESS RING --- */}
-      <div className="relative w-56 h-56 mb-8 flex items-center justify-center">
+      {/* --- SVG PROGRESS RING (Responsive Size) --- */}
+      {/* Changed w-56 h-56 to w-40 h-40 on mobile, md:w-56 md:h-56 on desktop */}
+      <div className="relative w-40 h-40 md:w-56 md:h-56 mb-6 md:mb-8 flex items-center justify-center">
         {/* SVG Circle */}
         <svg
           className="w-full h-full -rotate-90 transform"
@@ -111,28 +112,30 @@ const ProcessingLoader = () => {
 
         {/* Content Inside Circle */}
         <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-4 text-center">
-          <span className="font-serif text-stone-500 italic text-sm mb-1">
+          <span className="font-serif text-stone-500 italic text-xs md:text-sm mb-0.5 md:mb-1">
             You're
           </span>
-          <span className="font-display font-bold text-5xl text-stone-900 tracking-tighter leading-none mb-2">
+          {/* Responsive Font Size */}
+          <span className="font-display font-bold text-4xl md:text-5xl text-stone-900 tracking-tighter leading-none mb-1 md:mb-2">
             {queuePosition}
           </span>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-4">
+          <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 md:mb-4">
             In Line
           </span>
 
           {/* New Clean Time Format */}
           <div className="flex items-center gap-2 text-stone-500">
-            <span className="text-sm font-mono font-medium tabular-nums">
-               {timeLeft} seconds
+            <span className="text-xs md:text-sm font-mono font-medium tabular-nums">
+              {timeLeft} seconds
             </span>
           </div>
         </div>
       </div>
 
-      {/* --- Existing Branding Text --- */}
+      {/* --- Existing Branding Text (Responsive Size) --- */}
       <div className="flex flex-col items-center gap-1.5">
-        <div className="flex items-baseline font-display font-bold text-2xl tracking-tight opacity-60">
+        {/* Responsive Text Size */}
+        <div className="flex items-baseline font-display font-bold text-xl md:text-2xl tracking-tight opacity-60">
           <span className="text-black">Write</span>
           <span className="text-transparent bg-clip-text bg-linear-to-r from-accent-purple to-accent-coral">
             Natural
@@ -158,7 +161,7 @@ const ProcessingLoader = () => {
             </span>
           </div>
         </div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
+        <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">
           Re-humanizing text
         </p>
       </div>
@@ -502,7 +505,8 @@ export const HumanizerTool: React.FC = () => {
               </div>
             </div>
 
-            <div className="relative h-full bg-white rounded-3xl border border-stone-200 shadow-xl shadow-stone-200/60 flex flex-col z-10 overflow-hidden">
+            {/* Added min-h-[400px] to ensure space for loader on mobile */}
+            <div className="relative h-full min-h-100 bg-white rounded-3xl border border-stone-200 shadow-xl shadow-stone-200/60 flex flex-col z-10 overflow-hidden">
               <div className="p-5 pt-6 border-b border-stone-100 flex justify-between items-center bg-white min-h-20 relative z-10">
                 <div className="flex items-center gap-2 px-2">
                   {output ? (
